@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>md-babel: Executable Markdown code blocks and spreadsheets</title>
     <style>
-      :root { --flow-space: calc(2 * 1.618rem); }
+      /* Typography */
       /* @link https://utopia.fyi/type/calculator?c=320,18,1.2,1240,24,1.618,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
       :root {
         --step--2: clamp(0.573rem, 0.8537rem + -0.3622vw, 0.7813rem);
@@ -17,42 +17,81 @@
         --step-4: clamp(2.3328rem, -0.4315rem + 13.8217vw, 10.2803rem);
         --step-5: clamp(2.7994rem, -2.0125rem + 24.0594vw, 16.6335rem);
       }
-      html { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; }
+      :root {
+        --font-mono: 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+        --font-sans: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+        --font-main: var(--font-sans);
+      }
+      html { font-family: var(--font-mono); }
       body { font-size: var(--step-0); line-height: 1.618em; }
-      body { background: #222; color: #fefefe; }
+
       * { margin-block: 0; }
       h1, h2, h3 {
-        font-weight: 100;
+        font-family: var(--font-sans);
+        font-weight: 600;
         line-height: 1.0;
       }
+      h1 { font-size: var(--step-4); }
+      h2 { font-size: var(--step-2); }
       blockquote { font-style: italic; font-size: var(--step-1); margin-inline: 0; }
       blockquote cite { font-size: var(--step-0); }
-      p { }
-      main {
+      pre, code { font-family: var(--font-mono); }
+
+      /* Layout */
+      :root { --flow-space: calc(2 * 1.618rem); }
+      .container {
         display: grid;
-        grid-template-columns: 1fr [content-start] minmax(0, 50ch) [content-end] 1fr;
+        grid-template-columns: 1fr [content-start] minmax(0, 50ch) [content-end] 2fr;
         padding-block: 10vh;
       }
-      main > * { grid-column: content; }
+      .container > * { grid-column: content; }
       .flow > * + * {
         margin-block-start: var(--flow-space, 1em);
       }
+      #hero { grid-column-start: 1; grid-column-end: 4; }
+      #hero { display: flex; flex-direction: column; align-items: center; margin-block: 4vh; }
+      #hero h2 { font-weight: normal; }
+      .container h2 { grid-column-start: 2; grid-column-end: 4; }
+
+      /* Color */
+      :root {
+        --color-background: rebeccapurple;
+        --color-foreground: white;
+      }
+      body { background: var(--color-background); color: var(--color-foreground); }
+      a { color: var(--color-foreground); font-weight: bold; }
     </style>
   </head>
   <body>
-    <main class="flow">
-        <p><a href="https://github.com/md-babel">md-babel on GitHub</a></p>
-      
-        <h2>I want to use this</h2>
-        <ul>
-          <li><a href="https://github.com/md-babel/swift-markdown-babel">md-babel</a> CLI (Swift), the current reference implementation</li>  
-          <li><a href="https://github.com/md-babel/md-babel.el">md-babel.el</a>: Emacs package to execute code at point</li>
-        </ul>
+    <main class="container flow">
+      <hgroup id="hero">
+        <img src="markdown.svg" title="Markdown Logo" style="width: clamp(1rem, 4rem + 12vw, 20rem); max-height: clamp(2rem, 80vh, calc(2 * var(--step-4)));">
+        <h1>Markdown Babel</h1>
+        <h2>Executable <code>code blocks</code> and table fomulae</h2>
+      </hgroup>
 
-        <h2>I want to develop for this</h2>
-        <ul>
-          <li><a href="https://github.com/md-babel/md-babel-schema">md-babel JSON schema</a>: specifies the expectations so that you can write editor integrations</li>
-        </ul>
+      <p>Markdown Babel turns <abbr title="yes, any">any</abbr> Markdown file into an executable notebook.</p>
+
+      <p>If you know Jupyter Notebook, Logseq, or Emacs org-mode with org-babel, then you know Markdown Babel: you go to a block of code in your editor, <em>run it</em>, and its output is inserted into the document. If the output is an image, you get an image; if the output is text, you get text. Table? Well, you get a table.</p>
+
+      <hr>
+
+      <h2>“I desperately need to use this”</h2>
+      <p>We know.</p>
+      <ul>
+        <li><a href="https://github.com/md-babel/swift-markdown-babel">md-babel</a> CLI (Swift), the current reference implementation of a server</li>
+        <li><a href="https://github.com/md-babel/md-babel.el">md-babel.el</a>: Emacs client package to execute code at point</li>
+      </ul>
+
+      <h2>“I want to help development”</h2>
+      <ul>
+        <li><a href="https://github.com/md-babel/md-babel-schema">md-babel JSON schema</a>: specifies the expectations so that you can write editor integrations</li>
+        <li>All of the repositories above are open for contributions.</li>
+        <li>Check out <a href="https://github.com/md-babel">the md-babel org on GitHub</a></li>
+      </ul>
     </main>
+    <footer class="container">
+      <p><small>Markdown Logo by <a href="https://commons.wikimedia.org/wiki/File:Markdown-mark.svg">Dustin Curtis</a>, CC0, via Wikimedia Commons</small></p>
+    </footer>
   </body>
 </html>
